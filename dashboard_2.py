@@ -11,7 +11,7 @@ import fiona
 
 import panel as pn
 import holoviews as hv
-import hvplot.pandas  # registers hvplot extension
+import hvplot.pandas  #NOQA registers hvplot extension
 from bokeh.palettes import Category10, Category20_20
 from bokeh.io import curdoc as bokeh_curdoc
 import colorcet as cc
@@ -519,11 +519,14 @@ def rebuild_tables_accordion():
 # -------------------------
 def _handle_uploaded_files(event=None):
     pairs = []
+    
     v = file_input.value
     names = file_input.filename
     if not v:
         return
     if isinstance(v, (list, tuple)):
+        if names is None:
+            names = [str(x) for x in range(len(v))]
         for data, name in zip(v, names):
             pairs.append((name, data))
     else:
